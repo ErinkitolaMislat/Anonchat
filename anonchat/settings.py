@@ -26,7 +26,7 @@ SECRET_KEY = secrets.token_urlsafe(50)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'https://anonchat-8x8l.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'anonchat-8x8l.onrender.com']
 
 
 # Application definition
@@ -146,5 +146,5 @@ LOGIN_URL = 'login'
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = 'https://anonchat-8x8l.onrender.com'
+CSRF_COOKIE_DOMAIN = '.onrender.com'
 SECURE_SSL_REDIRECT = True
