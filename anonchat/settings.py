@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_REDIRECT_URL, LOGIN_URL
+from django.conf.global_settings import AUTH_USER_MODEL, CSRF_COOKIE_DOMAIN, CSRF_COOKIE_SECURE, LOGIN_REDIRECT_URL, LOGIN_URL, SESSION_COOKIE_SECURE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -145,3 +145,6 @@ AUTH_USER_MODEL = 'chatbox.User'
 LOGIN_REDIRECT_URL = 'room'
 LOGIN_URL = 'login'
 
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = 'anonchat-8x8l.onrender.com'
