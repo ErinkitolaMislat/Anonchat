@@ -3,7 +3,7 @@
     <title>AnonChat</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	
 </head>
 <body>
       <div class="container">
@@ -109,125 +109,126 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 200px;
+    font-size: 80px;
     color: rgba(44, 33, 33, 0.1); /* white */
     z-index: 1;
     text-align: center;
 }
 </style>
-
 <script>
-    const username = "{{ user.username }}";
-    const url = 'ws://' + window.location.host + '/ws/chat/';
-    const chatSocket = new WebSocket(url);
-    const msginput = document.getElementById('chat-message-input');
-    msginput.focus();
-    chatSocket.onmessage = function(event) {
-        const data = JSON.parse(event.data);
-        const chat = document.getElementById('chat');
-        let now = new Date();
-        let options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
-        let dateTime = now.toLocaleString('en-US', options);
-        if (data.image) {
-            const img = document.createElement('img');
-			img.src = data.image;
-
-			const usernameElement = document.createElement('strong');
-			usernameElement.innerText = data.username;
-
-			const timestampElement = document.createElement('small');
+    document.addEventListener('DOMContentLoaded', function(){
+		const username = "{{ user.username }}";
+		const url = 'ws://' + window.location.host + '/ws/chat/';
+		const chatSocket = new WebSocket(url);
+		const msginput = document.getElementById('chat-message-input');
+		msginput.focus();
+		chatSocket.onmessage = function(event) {
+			const data = JSON.parse(event.data);
+			const chat = document.getElementById('chat');
 			let now = new Date();
-			let dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-			let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
-			let date = now.toLocaleDateString('en-US', dateOptions);
-			let time = now.toLocaleTimeString('en-US', timeOptions);
-			timestampElement.innerText = `${date} ${time}`;
+			let options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+			let dateTime = now.toLocaleString('en-US', options);
+			if (data.image) {
+				const img = document.createElement('img');
+				img.src = data.image;
 
-			const containerElement = document.createElement('div');
-			containerElement.appendChild(timestampElement);
-			containerElement.appendChild(usernameElement);
-			containerElement.appendChild(img);
+				const usernameElement = document.createElement('strong');
+				usernameElement.innerText = data.username;
 
-			if (data.username === username) {
-				containerElement.className += "msg-right";
-			} else {
-				containerElement.className += "msg-left";
+				const timestampElement = document.createElement('small');
+				let now = new Date();
+				let dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+				let timeOptions = { hour: 'numeric', minute: 'numeric', hour12: true };
+				let date = now.toLocaleDateString('en-US', dateOptions);
+				let time = now.toLocaleTimeString('en-US', timeOptions);
+				timestampElement.innerText = `${date} ${time}`;
+
+				const containerElement = document.createElement('div');
+				containerElement.appendChild(timestampElement);
+				containerElement.appendChild(usernameElement);
+				containerElement.appendChild(img);
+
+				if (data.username === username) {
+					containerElement.className += "msg-right";
+				} else {
+					containerElement.className += "msg-left";
+				}
+
+				chat.appendChild(containerElement);
+			} else if (data.message) {
+				if (data.username === username) {
+					let containerElement = document.createElement('div');
+					containerElement.className += "msg-right message";
+					let smallElement = document.createElement('small');
+					smallElement.innerText = dateTime;
+					containerElement.appendChild(smallElement);
+					let strongElement = document.createElement('strong');
+					strongElement.innerText = data.username;
+					containerElement.appendChild(strongElement);
+					let messageElement = document.createElement('div');
+					// messageElement.className += "message";
+					messageElement.innerText = data.message;
+					containerElement.appendChild(messageElement);
+					chat.appendChild(containerElement);
+				} else {
+					let containerElement = document.createElement('div');
+					containerElement.className += "msg-left message";
+					let smallElement = document.createElement('small');
+					smallElement.innerText = dateTime;
+					containerElement.appendChild(smallElement);
+					let strongElement = document.createElement('strong');
+					strongElement.innerText = data.username;
+					containerElement.appendChild(strongElement);
+					let messageElement = document.createElement('div');
+					// messageElement.className += "message";
+					messageElement.innerText = data.message;
+					containerElement.appendChild(messageElement);
+					chat.appendChild(containerElement);
+				}
 			}
+			chat.scrollTop = chat.scrollHeight;
+		};
+		chatSocket.onclose = function(event) {
+			console.error('Chat socket closed unexpectedly');
+		};
 
-			chat.appendChild(containerElement);
-        } else if (data.message) {
-            if (data.username === username) {
-                let containerElement = document.createElement('div');
-				containerElement.className += "msg-right message";
-				let smallElement = document.createElement('small');
-				smallElement.innerText = dateTime;
-				containerElement.appendChild(smallElement);
-				let strongElement = document.createElement('strong');
-				strongElement.innerText = data.username;
-				containerElement.appendChild(strongElement);
-				let messageElement = document.createElement('div');
-				// messageElement.className += "message";
-				messageElement.innerText = data.message;
-				containerElement.appendChild(messageElement);
-				chat.appendChild(containerElement);
-            } else {
-                let containerElement = document.createElement('div');
-				containerElement.className += "msg-left message";
-				let smallElement = document.createElement('small');
-				smallElement.innerText = dateTime;
-				containerElement.appendChild(smallElement);
-				let strongElement = document.createElement('strong');
-				strongElement.innerText = data.username;
-				containerElement.appendChild(strongElement);
-				let messageElement = document.createElement('div');
-				// messageElement.className += "message";
-				messageElement.innerText = data.message;
-				containerElement.appendChild(messageElement);
-				chat.appendChild(containerElement);
-            }
-        }
-        chat.scrollTop = chat.scrollHeight;
-    };
-    chatSocket.onclose = function(event) {
-        console.error('Chat socket closed unexpectedly');
-    };
+		const input = document.getElementById('chat-message-input');
+		const submitButton = document.getElementById('chat-message-submit');
+		const imageInput = document.getElementById('image-input');
+		const uploadButton = document.getElementById('upload-button');
 
-    const input = document.getElementById('chat-message-input');
-    const submitButton = document.getElementById('chat-message-submit');
-    const imageInput = document.getElementById('image-input');
-    const uploadButton = document.getElementById('upload-button');
+		uploadButton.addEventListener('click', function() {
+			imageInput.click();
+		});
 
-    uploadButton.addEventListener('click', function() {
-        imageInput.click();
-    });
+		imageInput.addEventListener('change', function(event) {
+			const file = event.target.files[0];
+			if (file) {
+				const reader = new FileReader();
+				reader.onload = function(e) {
+					const base64Image = e.target.result;
+					chatSocket.send(JSON.stringify({'image': base64Image, 'username': username}));
+				};
+				reader.readAsDataURL(file);
+			}
+		});
 
-    imageInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64Image = e.target.result;
-                chatSocket.send(JSON.stringify({'image': base64Image, 'username': username}));
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+		submitButton.addEventListener('click', function(event) {
+			const message = input.value;
+			if(message) {
+				// send message in JSON format
+				chatSocket.send(JSON.stringify({'message': message, 'username': username}));
+				// clear input
+				input.value = '';
+			}
+		});
 
-    submitButton.addEventListener('click', function(event) {
-        const message = input.value;
-        if(message) {
-            // send message in JSON format
-            chatSocket.send(JSON.stringify({'message': message, 'username': username}));
-            // clear input
-            input.value = '';
-        }
-    });
-
-    input.addEventListener('keyup', function(event) {
-        event.preventDefault();
-        if (event.keyCode === 13) {
-            submitButton.click();
-        }
-    });
+		input.addEventListener('keyup', function(event) {
+			event.preventDefault();
+			if (event.keyCode === 13) {
+				submitButton.click();
+			}
+		});
+		} );
 </script>
 </html>

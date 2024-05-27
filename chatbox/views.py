@@ -27,14 +27,19 @@ def signup(request):
 
 def login(request):
     if request.method == 'POST':
+        print('init login')
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        print(f'user authenticated {username} {password}')
+        print(user)
         if user is not None:
             auth_login(request, user)
-            return render(request, 'chat.html')
+            print('login successful')
+            return render(request, 'room.html', {'messages': Message.objects.all()})
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
+            error = 'Invalid credentials'
+            return render(request, 'login.html', {'error': error})
     else:
         return render(request, 'login.html')
 

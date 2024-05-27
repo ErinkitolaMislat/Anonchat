@@ -153,4 +153,4 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_DOMAIN = '.onrender.com'
 SECURE_SSL_REDIRECT = False
-CSRF_TRUSTED_ORIGINS = ['*.onrender.com', 'https://anonchat-8x8l.onrender.com', 'http://anonchat-8x8l.onrender.com', 'anonchat-8x8l.onrender.com', 'www.anonchat-8x8l.onrender.com', 'https://www.anonchat-8x8l.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['http://*.onrender.com', 'https://anonchat-8x8l.onrender.com', 'http://anonchat-8x8l.onrender.com',   'https://www.anonchat-8x8l.onrender.com']
