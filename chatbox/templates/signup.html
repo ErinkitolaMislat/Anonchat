@@ -54,7 +54,7 @@
             <form method="post">
             {% csrf_token %}
             <h2>AnonChat Signup</h2>
-            <p>Hint: Reload the page if you dont like the name you see</p>
+            <p>Hint: Reload the page if you dont like the name you seeca</p>
             <div class="form-element">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="{{ username }}" readonly>
@@ -66,6 +66,7 @@
             <div class="form-element">
                 <button type="submit">submit</button>
             </div>
+            <p>you already have an accont <a href="{% url 'login' %}">login</a></p>
         </form>
     </div>
 </body>
