@@ -118,7 +118,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function(){
 		const username = "{{ user.username }}";
-		const url = 'ws://' + window.location.host + '/ws/chat/';
+		const url = 'wss://' + window.location.host + '/ws/chat/';
 		const chatSocket = new WebSocket(url);
 		const msginput = document.getElementById('chat-message-input');
 		msginput.focus();
