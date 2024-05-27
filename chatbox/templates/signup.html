@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AnonChat Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 16px;
+            background-color: white;
+            border: 1px solid black;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-element {
+            margin-top: 20px;
+            width: 100%;
+        }
+        .form-element label {
+            display: block;
+        }
+        .form-element input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-element button{
+            text-align: center;
+            background-color: rgb(96, 212, 96);
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+            <form method="post">
+            {% csrf_token %}
+            <h2>AnonChat Signup</h2>
+            <p>Hint: Reload the page if you dont like the name you see</p>
+            <div class="form-element">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{ username }}" readonly>
+            </div>
+            <div class="form-element">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-element">
+                <button type="submit">submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

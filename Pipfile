@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+channels-redis = "*"
+django = "*"
+faker = "==25.1.0"
+daphne = "*"
+twisted = {extras = ["tls", "http2"], version = "*"}
+channels = "*"
+watchdog = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
