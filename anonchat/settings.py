@@ -11,8 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
-from django.conf.global_settings import AUTH_USER_MODEL, CSRF_COOKIE_DOMAIN, CSRF_COOKIE_SECURE, LOGIN_REDIRECT_URL, LOGIN_URL, SESSION_COOKIE_SECURE
+import secrets
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)x^-mn_s$6t-3i%cl!nm*-_)l*6w@ce9sn15s5ub#@akth0+li'
+SECRET_KEY = secrets.token_urlsafe(50)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'anonchat-8x8l.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'https://anonchat-8x8l.onrender.com']
 
 
 # Application definition
@@ -145,6 +144,7 @@ AUTH_USER_MODEL = 'chatbox.User'
 LOGIN_REDIRECT_URL = 'room'
 LOGIN_URL = 'login'
 
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = 'anonchat-8x8l.onrender.com'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_DOMAIN = 'https://anonchat-8x8l.onrender.com'
+SECURE_SSL_REDIRECT = True
