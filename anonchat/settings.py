@@ -138,13 +138,18 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CHANNEL_LAYERS = {
-'default': {
-'BACKEND': 'channels_redis.core.RedisChannelLayer',
-'CONFIG': {
-'hosts': [('127.0.0.1', 6379)],
-},
-},
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    }
+}
+
 
 AUTH_USER_MODEL = 'chatbox.User'
 LOGIN_REDIRECT_URL = 'room'
