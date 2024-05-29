@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'anonchat-8x8l.onrender.com',
 
 INSTALLED_APPS = [
 
+     'daphne',
     #default
     'django.contrib.admin',
     'django.contrib.auth',

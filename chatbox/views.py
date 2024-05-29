@@ -16,6 +16,7 @@ def signup(request):
     print(username)
     if request.method == 'POST':
         password = request.POST['password']
+        username = request.POST['username']
         user = User.objects.create(username=username) #type: ignore
         user.set_password(password)
         user.save()
@@ -31,8 +32,8 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
-        print(f'user authenticated {username} {password}')
-        print(user)
+        if user:
+            print(f'user authenticated {username} {password}')
         if user is not None:
             auth_login(request, user)
             print('login successful')
